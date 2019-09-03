@@ -1,9 +1,8 @@
 package com.example.Controllers;
 
 import com.example.Common.Util;
-import com.example.Entity.City;
-import com.example.Service.CRUDCityService;
-import com.sun.xml.internal.bind.v2.TODO;
+import com.example.Entity.OldPost;
+import com.example.Service.CRUDOldPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,88 +13,85 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
-import java.util.List;
-
 /**
- * CRUD City Controller
+ * CRUD Old Post Controller
  */
 @RestController
-@RequestMapping(value = "/city")
-public class CRUDCityController {
+@RequestMapping(value = "/oldPost")
+public class CRUDOldPostController {
 
     @Autowired
-    private CRUDCityService crudCityService;
+    private CRUDOldPostService crudOldPostService;
 
     /**
-     * Save new City
+     * Save new Old Post
      *
-     * @param city city info from request
-     * @return saved city info with HttpStatus
+     * @param oldPost info from request
+     * @return saved Old Post with HttpStatus
      */
     @PostMapping(path = {"/save"})
-    public ResponseEntity<Object> saveCity(@RequestBody City city) {
-        if (city == null) return Util.returnBadRequestStatus();
-        City savedCity = null;
+    public ResponseEntity<Object> saveOldPost(@RequestBody OldPost oldPost) {
+        if (oldPost == null) return Util.returnBadRequestStatus();
+        OldPost savedOldPost = null;
         try {
-            savedCity = crudCityService.saveCity(city);
+            savedOldPost = crudOldPostService.saveOldPost(oldPost);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
-        if (savedCity == null) return Util.returnServerError();
-        String result = Util.convertObjToJSON(savedCity);
+        if (savedOldPost == null) return Util.returnServerError();
+        String result = Util.convertObjToJSON(savedOldPost);
         System.out.println(result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
-     * find City By CityId
+     * find Old Post By Old Post Id
      *
      * @param id get from Url path
      * @return ResponseEntity with data and status
      */
     @GetMapping(path = {"/find", "/find/{id}"})
-    public ResponseEntity<Object> findCityByCityId(@PathVariable(name = "id", required = false) String id) {
+    public ResponseEntity<Object> findOldPost(@PathVariable(name = "id", required = false) String id) {
         if (Util.isInputValid(id) == false) return Util.returnBadRequestStatus();
-        City city = crudCityService.findByCityId(id);
-        if (city == null) return Util.returnNotFoundStatus();
-        String result = Util.convertObjToJSON(city);
+        OldPost oldPost = crudOldPostService.find(id);
+        if (oldPost == null) return Util.returnNotFoundStatus();
+        String result = Util.convertObjToJSON(oldPost);
         System.out.println(result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
-     * Update a City
+     * Update an Old Post
      *
-     * @param city get from request
-     * @return updated City with OK Status
+     * @param oldPost get from request
+     * @return updated Old Post with OK Status
      */
     @PostMapping(path = {"/update"})
-    public ResponseEntity<Object> updateCity(@RequestBody City city) {
-        if (city == null || Util.isInputValid(city.getCityId()) == false) return Util.returnBadRequestStatus();
-        City updatedCity = null;
+    public ResponseEntity<Object> updateOldPost(@RequestBody OldPost oldPost) {
+        if (oldPost == null || Util.isInputValid(oldPost.getOldPostId()) == false) return Util.returnBadRequestStatus();
+        OldPost updatedOldPost = null;
         try {
-            updatedCity = crudCityService.updateCity(city);
+            updatedOldPost = crudOldPostService.updateOldPost(oldPost);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
-        if (updatedCity == null) return Util.returnServerError();
-        String result = Util.convertObjToJSON(updatedCity);
+        if (updatedOldPost == null) return Util.returnServerError();
+        String result = Util.convertObjToJSON(updatedOldPost);
         System.out.println(result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
-     * Delete a City
+     * Delete an Old Post
      *
      * @param id to delete
      * @return ResponseEntity with OK Status
      */
     @GetMapping(path = {"/delete", "/delete/{id}"})
-    public ResponseEntity<Object> deleteCity(@PathVariable(name = "id", required = false) String id) {
+    public ResponseEntity<Object> deleteOldPost(@PathVariable(name = "id", required = false) String id) {
         if (Util.isInputValid(id) == false) return Util.returnBadRequestStatus();
         try {
-            crudCityService.deleteCity(id);
+            crudOldPostService.deleteOldPost(id);
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }

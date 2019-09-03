@@ -8,17 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
 @Data
-@Table(name = "tbl_city")
-public class City {
+@Entity
+@Table(name = "tbl_old_post")
+public class OldPost {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String cityId;
-    private String code;
-    private String cityKana;
-    private String city;
-    private String prefectureId;
-
-
+    private String oldPostId;
+    private String oldPostCode;
 }

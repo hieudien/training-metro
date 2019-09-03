@@ -34,7 +34,7 @@ public class SearchAddressController {
     }
 
     /**
-     * Search By Post Code
+     * Search By PostCode
      *
      * @param postCode get from URL path
      * @return ResponseEntity with data and status
@@ -56,7 +56,7 @@ public class SearchAddressController {
     }
 
     /**
-     * Search By Prefecture Code
+     * Search By PrefectureCode
      *
      * @param prefectureCode get from Url path
      * @return ResponseEntity with data and status
