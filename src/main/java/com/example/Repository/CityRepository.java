@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * City Repository
  */
-public interface CityRepository extends CrudRepository<City, Long> {
+public interface CityRepository extends CrudRepository<City, String> {
 
     /**
      * Finde City by cityId

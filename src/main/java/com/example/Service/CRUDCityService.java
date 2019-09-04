@@ -16,10 +16,9 @@ public class CRUDCityService {
      *
      * @param city get from request
      * @return saved City info
-     * @throws Exception happened when save City
      */
-    public City saveCity(City city) throws Exception {
-        return cityRepository.save(city);
+    public City saveCity(City city) {
+        return (city == null) ? null : cityRepository.save(city);
     }
 
     /**
@@ -29,10 +28,7 @@ public class CRUDCityService {
      * @return city
      */
     public City findByCityId(String cityId) {
-        City city = cityRepository.findByCityId(cityId);
-//        List<City> cityList = (List<City>) cityRepository.findAll();
-        System.out.printf(city.toString());
-        return city;
+        return (cityId == null) ? null : cityRepository.findByCityId(cityId);
     }
 
     /**
@@ -40,9 +36,9 @@ public class CRUDCityService {
      *
      * @param city info get from request
      * @return updated City
-     * @throws Exception happened when update City
      */
-    public City updateCity(City city) throws Exception {
+    public City updateCity(City city) {
+        if (city == null || city.getCityId() == null) return null;
         City updateCity = cityRepository.findByCityId(city.getCityId());
         updateCity.setCode(city.getCode());
         updateCity.setCityKana(city.getCityKana());
@@ -56,7 +52,7 @@ public class CRUDCityService {
      *
      * @param cityId to delete
      */
-    public void deleteCity(String cityId) throws Exception {
-        cityRepository.delete(Long.valueOf(cityId));
+    public void deleteCity(String cityId) {
+        cityRepository.delete(cityId);
     }
 }

@@ -1,14 +1,8 @@
 package com.example.DTO;
 
+import lombok.Data;
+
+@Data
 public class SearchByPostCodeRequest {
     private String postCode;
-
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
 }

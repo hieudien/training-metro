@@ -36,12 +36,7 @@ public class CRUDCityController {
     @PostMapping(path = {"/save"})
     public ResponseEntity<Object> saveCity(@RequestBody City city) {
         if (city == null) return Util.returnBadRequestStatus();
-        City savedCity = null;
-        try {
-            savedCity = crudCityService.saveCity(city);
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-        }
+        City savedCity = crudCityService.saveCity(city);
         if (savedCity == null) return Util.returnServerError();
         String result = Util.convertObjToJSON(savedCity);
         System.out.println(result);
@@ -73,12 +68,7 @@ public class CRUDCityController {
     @PostMapping(path = {"/update"})
     public ResponseEntity<Object> updateCity(@RequestBody City city) {
         if (city == null || Util.isInputValid(city.getCityId()) == false) return Util.returnBadRequestStatus();
-        City updatedCity = null;
-        try {
-            updatedCity = crudCityService.updateCity(city);
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-        }
+        City updatedCity = crudCityService.updateCity(city);
         if (updatedCity == null) return Util.returnServerError();
         String result = Util.convertObjToJSON(updatedCity);
         System.out.println(result);
@@ -94,11 +84,7 @@ public class CRUDCityController {
     @GetMapping(path = {"/delete", "/delete/{id}"})
     public ResponseEntity<Object> deleteCity(@PathVariable(name = "id", required = false) String id) {
         if (Util.isInputValid(id) == false) return Util.returnBadRequestStatus();
-        try {
-            crudCityService.deleteCity(id);
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-        }
+        crudCityService.deleteCity(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

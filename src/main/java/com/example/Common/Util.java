@@ -1,6 +1,5 @@
 package com.example.Common;
 
-import com.example.Entity.City;
 import com.example.ResponeModel.ResponseError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 @ComponentScan

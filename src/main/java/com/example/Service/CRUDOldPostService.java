@@ -16,10 +16,9 @@ public class CRUDOldPostService {
      *
      * @param oldPost get from request
      * @return saved Old Post info
-     * @throws Exception happened when Old Post
      */
-    public OldPost saveOldPost(OldPost oldPost) throws Exception {
-        return oldPostRepository.save(oldPost);
+    public OldPost saveOldPost(OldPost oldPost) {
+        return (oldPost == null) ? null : oldPostRepository.save(oldPost);
     }
 
     /**
@@ -29,9 +28,7 @@ public class CRUDOldPostService {
      * @return Old post
      */
     public OldPost find(String oldPostId) {
-        OldPost oldPost = oldPostRepository.findOne(oldPostId);
-        System.out.printf(oldPost.toString());
-        return oldPost;
+        return (oldPostId == null) ? null : oldPostRepository.findOne(oldPostId);
     }
 
     /**
@@ -39,9 +36,9 @@ public class CRUDOldPostService {
      *
      * @param oldPost info get from request
      * @return updated OldPost
-     * @throws Exception happened when update OldPost
      */
-    public OldPost updateOldPost(OldPost oldPost) throws Exception {
+    public OldPost updateOldPost(OldPost oldPost) {
+        if (oldPost == null || oldPost.getOldPostId() == null) return null;
         OldPost updateOldPost = oldPostRepository.findOne(oldPost.getOldPostId());
         updateOldPost.setOldPostCode(oldPost.getOldPostCode());
         return oldPostRepository.save(updateOldPost);
@@ -52,7 +49,7 @@ public class CRUDOldPostService {
      *
      * @param oldPostId to delete
      */
-    public void deleteOldPost(String oldPostId) throws Exception {
+    public void deleteOldPost(String oldPostId) {
         oldPostRepository.delete(oldPostId);
     }
 }

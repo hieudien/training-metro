@@ -6,7 +6,6 @@ import com.example.DTO.SearchByPrefectureCodeRequest;
 import com.example.DTO.SearchByPrefectureCodeResponse;
 import com.example.TrainingSpringbootApplication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,6 +44,12 @@ public class SearchAddressService {
         return responsesList;
     }
 
+    /**
+     * search address By Prefecture Code
+     *
+     * @param searchByPrefectureCodeRequest request with prefecture code
+     * @return list address
+     */
     public List<SearchByPrefectureCodeResponse> searchByPrefectureCode(SearchByPrefectureCodeRequest
                                                                                searchByPrefectureCodeRequest) {
         List<SearchByPrefectureCodeResponse> responsesList = new ArrayList<>();
