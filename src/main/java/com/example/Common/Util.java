@@ -1,6 +1,7 @@
 package com.example.Common;
 
 import com.example.ResponeModel.ResponseError;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,7 +31,9 @@ public class Util {
      * @return JSON format of objects
      */
     public static String convertListObjToJSON(List objList) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
         return gson.toJson(objList);
     }
 
@@ -41,7 +44,10 @@ public class Util {
      * @return JSON format the object
      */
     public static String convertObjToJSON(Object obj) {
-        return new Gson().toJson(obj);
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+        return gson.toJson(obj);
     }
 
     /**

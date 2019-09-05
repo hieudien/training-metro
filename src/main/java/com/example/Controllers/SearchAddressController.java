@@ -28,11 +28,6 @@ public class SearchAddressController {
     @Autowired
     private SearchAddressService searchAddressService;
 
-    @RequestMapping("/")
-    public String index() {
-        return "Hello";
-    }
-
     /**
      * Search By PostCode
      *
