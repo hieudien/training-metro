@@ -1,8 +1,11 @@
 package com.example.ControllerTest;
 
-import com.example.Controllers.CRUDCityController;
-import com.example.Entity.City;
-import com.example.Service.CRUDCityService;
+import com.example.Controllers.CRUDOldPostController;
+import com.example.Controllers.CRUDOldPostController;
+import com.example.Entity.OldPost;
+import com.example.Entity.OldPost;
+import com.example.Service.CRUDOldPostService;
+import com.example.Service.CRUDOldPostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,19 +20,19 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
- * Test for {@link com.example.Controllers.CRUDCityController}.
+ * Test for {@link com.example.Controllers.CRUDOldPostController}.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class CRUDCityControllerTest {
+public class CRUDOldPostControllerTest {
     @Mock
-    CRUDCityService crudCityService;
+    CRUDOldPostService crudOldPostService;
     @InjectMocks
-    CRUDCityController sut;
+    CRUDOldPostController sut;
     private MockMvc mockMvc;
 
-    private static final String CITY_PATH = "/city";
+    private static final String OLD_POST_PATH = "/oldPost";
     private static final String SAVE = "/save";
-    private static final String FIND = "//find/{id}";
+    private static final String FIND = "/find/{id}";
     private static final String UPDATE = "/update";
     private static final String DELETE = "/delete/{id}";
 
@@ -42,110 +45,98 @@ public class CRUDCityControllerTest {
     }
 
     /**
-     * Test save a city success
+     * Test save old post success
      * Input:
-     * A city that not exists in DB
+     * Old post that not exists in DB
      * Output:
      * Response with OK status
-     *
-     * @throws Exception exception exception
      */
     @Test
-    public void saveCityTest1() throws Exception {
+    public void saveOldPostTest1() throws Exception {
         // setup
-        City city = new City();
-        city.setCityId("011");
-        city.setCity("city");
-        city.setCode("code");
-        city.setCityKana("cityKana");
-        city.setPrefectureId("prefectureId");
-        Mockito.when(crudCityService.saveCity(city)).thenReturn(city);
+        OldPost oldPost = new OldPost();
+        oldPost.setOldPostId("1234");
+        oldPost.setOldPostCode("code");
+        Mockito.when(crudOldPostService.saveOldPost(oldPost)).thenReturn(oldPost);
         ObjectMapper mapper = new ObjectMapper();
-        String content = mapper.writeValueAsString(city);
+        String content = mapper.writeValueAsString(oldPost);
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .post(CITY_PATH + SAVE).contentType("application/json")
+                .post(OLD_POST_PATH + SAVE).contentType("application/json")
                 .content(content))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     /**
-     * Test save a city fail,
+     * Test save a OldPost fail,
      * Input:
-     * Request city is null
+     * Request OldPost is null
      * Output:
      * Response with Bad request Status
-     *
-     * @throws Exception exception exception
      */
     @Test
-    public void saveCityTest2() throws Exception {
+    public void saveOldPostTest2() throws Exception {
         // setup
-        City city = null;
-        Mockito.when(crudCityService.saveCity(city)).thenReturn(city);
+        OldPost OldPost = null;
+        Mockito.when(crudOldPostService.saveOldPost(OldPost)).thenReturn(OldPost);
         ObjectMapper mapper = new ObjectMapper();
-        String content = mapper.writeValueAsString(city);
+        String content = mapper.writeValueAsString(OldPost);
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .post(CITY_PATH + SAVE).contentType("application/json")
+                .post(OLD_POST_PATH + SAVE).contentType("application/json")
                 .content(content))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     /**
-     * Test save a city, duplicate key error
+     * Test save a OldPost, duplicate key error
      * Input:
-     * A city that exists in DB
+     * A OldPost that exists in DB
      * Output:
      * Response with Server Error Status
-     *
-     * @throws Exception exception exception
      */
     @Test
-    public void saveCityTest3() throws Exception {
+    public void saveOldPostTest3() throws Exception {
         // setup
-        City city = new City();
-        city.setCityId("011");
-        city.setCity("city");
-        city.setCode("code");
-        city.setCityKana("cityKana");
-        city.setPrefectureId("prefectureId");
-        Mockito.when(crudCityService.saveCity(city)).thenReturn(null);
+        OldPost oldPost = new OldPost();
+        oldPost.setOldPostId("1234");
+        oldPost.setOldPostCode("code");
+        Mockito.when(crudOldPostService.saveOldPost(oldPost)).thenReturn(null);
         ObjectMapper mapper = new ObjectMapper();
-        String content = mapper.writeValueAsString(city);
+        String content = mapper.writeValueAsString(oldPost);
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .post(CITY_PATH + SAVE).contentType("application/json")
+                .post(OLD_POST_PATH + SAVE).contentType("application/json")
                 .content(content))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError());
     }
 
     /**
-     * Test find city by cityId success
+     * Test find OldPost by oldPostId success
      * Input:
-     * CityId that exists in DB
+     * oldPostId that exists in DB
      * Output:
      * Response with OK status
      *
      * @throws Exception exception
      */
     @Test
-    public void findCityByCityIdTest1() throws Exception {
+    public void findOldPostTest1() throws Exception {
         // setup
-        String cityId = "1234";
-        Mockito.when(crudCityService.findByCityId(cityId)).thenReturn(new City());
+        String oldPostId = "1234";
+        Mockito.when(crudOldPostService.find(oldPostId)).thenReturn(new OldPost());
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .get(CITY_PATH + FIND, cityId))
+                .get(OLD_POST_PATH + FIND, oldPostId))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     /**
-     * Test find city by cityId success, input cityId is null
+     * Test find OldPost by oldPostId success, input oldPostId is null
      * Input:
      * null
      * Output:
@@ -154,89 +145,86 @@ public class CRUDCityControllerTest {
      * @throws Exception exception
      */
     @Test
-    public void findCityByCityIdTest2() throws Exception {
+    public void findOldPostTest2() throws Exception {
         // setup
-        String cityId = null;
+        String oldPostId = null;
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .get(CITY_PATH + FIND, cityId))
+                .get(OLD_POST_PATH + FIND, oldPostId))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     /**
-     * Test find city by cityId success, input cityId is not a number
+     * Test find oldPostId by oldPostId success, input oldPostId is not a number
      * Input:
-     * input cityId is not a number
+     * input oldPostId is not a number
      * Output:
      * Response with Bad Request Status
      *
      * @throws Exception exception
      */
     @Test
-    public void findCityByCityIdTest3() throws Exception {
+    public void findOldPostTest3() throws Exception {
         // setup
-        String cityId = "cityId";
-        Mockito.when(crudCityService.findByCityId(cityId)).thenReturn(new City());
+        String oldPostId = "oldPostId";
+        Mockito.when(crudOldPostService.find(oldPostId)).thenReturn(new OldPost());
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .get(CITY_PATH + FIND, cityId))
+                .get(OLD_POST_PATH + FIND, oldPostId))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     /**
-     * Test find city by cityId, there is no record be found
+     * Test find OldPost by oldPostId, there is no record be found
      * Input:
-     * CityId that exists in DB
+     * oldPostId that exists in DB
      * Output:
      * Response with Not Found Status
      *
      * @throws Exception exception
      */
     @Test
-    public void findCityByCityIdTest4() throws Exception {
+    public void findOldPostTest4() throws Exception {
         // setup
-        String cityId = "1234";
-        Mockito.when(crudCityService.findByCityId(cityId)).thenReturn(null);
+        String oldPostId = "1234";
+        Mockito.when(crudOldPostService.find(oldPostId)).thenReturn(null);
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .get(CITY_PATH + FIND, cityId))
+                .get(OLD_POST_PATH + FIND, oldPostId))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     /**
-     * Test update a city success
+     * Test update a OldPost success
      * Input:
-     * A city that exists in DB with some different information
+     * A OldPost that exists in DB with some different information
      * Output:
-     * Response with updated city and OK status
+     * Response with updated OldPost and OK status
      *
      * @throws Exception exception
      */
     @Test
-    public void updateCityTest1() throws Exception {
+    public void updateOldPostTest1() throws Exception {
         // setup
-        City city = new City();
-        city.setCityId("011");
-        city.setCity("city");
-        city.setCode("code");
-        city.setCityKana("cityKana");
-        city.setPrefectureId("prefectureId");
-        Mockito.when(crudCityService.updateCity(city)).thenReturn(city);
+        OldPost oldPost = new OldPost();
+        oldPost.setOldPostId("1234");
+        oldPost.setOldPostCode("code");
+        Mockito.when(crudOldPostService.updateOldPost(oldPost)).thenReturn(oldPost);
         ObjectMapper mapper = new ObjectMapper();
-        String content = mapper.writeValueAsString(city);
+        String content = mapper.writeValueAsString(oldPost);
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .post(CITY_PATH + UPDATE).contentType("application/json")
+                .post(OLD_POST_PATH + UPDATE).contentType("application/json")
                 .content(content))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     /**
-     * Test update a city fail, input city is null
+     * Test update a OldPost fail, input OldPost is null
      * Input:
      * null
      * Output:
@@ -245,105 +233,96 @@ public class CRUDCityControllerTest {
      * @throws Exception exception
      */
     @Test
-    public void updateCityTest2() throws Exception {
+    public void updateOldPostTest2() throws Exception {
         // setup
-        City city = null;
-        Mockito.when(crudCityService.updateCity(city)).thenReturn(city);
+        OldPost oldPost = null;
+        Mockito.when(crudOldPostService.updateOldPost(oldPost)).thenReturn(oldPost);
         ObjectMapper mapper = new ObjectMapper();
-        String content = mapper.writeValueAsString(city);
+        String content = mapper.writeValueAsString(oldPost);
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .post(CITY_PATH + UPDATE).contentType("application/json")
+                .post(OLD_POST_PATH + UPDATE).contentType("application/json")
                 .content(content))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     /**
-     * Test update a city fail, server error
+     * Test update a OldPost fail, server error
      * Input:
-     * A city that exists in DB with some different information
+     * A OldPost that exists in DB with some different information
      * Output:
      * Response with Server Error Status
      *
      * @throws Exception exception
      */
     @Test
-    public void updateCityTest3() throws Exception {
+    public void updateOldPostTest3() throws Exception {
         // setup
-        City city = new City();
-        city.setCityId("011");
-        city.setCity("city");
-        city.setCode("code");
-        city.setCityKana("cityKana");
-        city.setPrefectureId("prefectureId");
-        Mockito.when(crudCityService.updateCity(city)).thenReturn(null);
+        OldPost oldPost = new OldPost();
+        oldPost.setOldPostId("1234");
+        oldPost.setOldPostCode("code");
+        Mockito.when(crudOldPostService.updateOldPost(oldPost)).thenReturn(null);
         ObjectMapper mapper = new ObjectMapper();
-        String content = mapper.writeValueAsString(city);
+        String content = mapper.writeValueAsString(oldPost);
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .post(CITY_PATH + UPDATE).contentType("application/json")
+                .post(OLD_POST_PATH + UPDATE).contentType("application/json")
                 .content(content))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError());
     }
 
     /**
-     * Test delete a city success
+     * Test delete a OldPost success
      * Input:
-     * CityId that exists in DB
+     * oldPostId that exists in DB
      * Output:
      * Response with OK status
-     *
-     * @throws Exception exception
      */
     @Test
-    public void deleteCityTest1() throws Exception {
+    public void deleteOldPostTest1() throws Exception {
         // setup
-        String cityId = "1234";
+        String oldPostId = "1234";
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .get(CITY_PATH + DELETE, cityId))
+                .get(OLD_POST_PATH + DELETE, oldPostId))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     /**
-     * Test delete a city fail, input cityId is null
+     * Test delete a OldPost fail, input oldPostId is null
      * Input:
      * null
      * Output:
      * Response with Bad Request Status
-     *
-     * @throws Exception exception
      */
     @Test
-    public void deleteCityTest2() throws Exception {
+    public void deleteOldPostTest2() throws Exception {
         // setup
-        String cityId = null;
+        String oldPostId = null;
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .get(CITY_PATH + DELETE, cityId))
+                .get(OLD_POST_PATH + DELETE, oldPostId))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     /**
-     * Test delete a city fail, input cityId is not a number
+     * Test delete a OldPost fail, input oldPostId is not a number
      * Input:
-     * input cityId is not a number
+     * input oldPostId is not a number
      * Output:
      * Response with Bad Request Status
-     *
-     * @throws Exception exception
      */
     @Test
-    public void deleteCityTest3() throws Exception {
+    public void deleteOldPostTest3() throws Exception {
         // setup
-        String cityId = "cityID";
+        String oldPostId = "oldPostId";
         // exercise
         mockMvc.perform(MockMvcRequestBuilders
-                .get(CITY_PATH + DELETE, cityId))
+                .get(OLD_POST_PATH + DELETE, oldPostId))
                 // verify
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }

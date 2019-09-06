@@ -34,6 +34,7 @@ public class SearchAddressService {
             ResultSet rs = stmt.executeQuery();
 
             SearchByPostCodeResponse searchByPostCodeResponse;
+            if (rs.next() == false) return null;
             while (rs.next()) {
                 searchByPostCodeResponse = copyPostCodeResponse(rs);
                 responsesList.add(searchByPostCodeResponse);
@@ -59,6 +60,7 @@ public class SearchAddressService {
             ResultSet rs = stmt.executeQuery();
 
             SearchByPrefectureCodeResponse searchByPrefectureCodeResponse;
+            if (rs.next() == false) return null;
             while (rs.next()) {
                 searchByPrefectureCodeResponse = copyPrefectureCodeResponse(rs);
                 responsesList.add(searchByPrefectureCodeResponse);

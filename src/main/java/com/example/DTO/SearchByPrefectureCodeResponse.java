@@ -1,8 +1,10 @@
 package com.example.DTO;
 
 import lombok.Data;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Data
+@EntityScan
 public class SearchByPrefectureCodeResponse {
     private String data;
     private String code;

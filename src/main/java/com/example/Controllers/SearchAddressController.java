@@ -42,8 +42,8 @@ public class SearchAddressController {
         searchByPostCodeRequest.setPostCode(postCode);
         List<SearchByPostCodeResponse> resultList = searchAddressService.searchByPostCode(searchByPostCodeRequest);
 
-        // if record number = 0, return 404 error
-        if (resultList.size() == 0) return Util.returnNotFoundStatus();
+        // if resultList is null, return 404 error
+        if (resultList == null) return Util.returnNotFoundStatus();
 
         String result = Util.convertListObjToJSON(resultList);
         System.out.println(result);
@@ -64,8 +64,8 @@ public class SearchAddressController {
         searchByPrefectureCodeRequest.setPrefectureCode(prefectureCode);
         List<SearchByPrefectureCodeResponse> resultList = searchAddressService.searchByPrefectureCode(searchByPrefectureCodeRequest);
 
-        // if record number = 0, return 404 error
-        if (resultList.size() == 0) return Util.returnNotFoundStatus();
+        // if resultList is null, return 404 error
+        if (resultList == null) return Util.returnNotFoundStatus();
 
         String result = Util.convertListObjToJSON(resultList);
         System.out.println(result);
